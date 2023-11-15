@@ -1,0 +1,12 @@
+FROM golang:1.20 AS build
+
+WORKDIR /src
+
+COPY go.mod go.sum ./
+COPY vendor vendor
+COPY *.go ./
+
+RUN CGO_ENABLED=0 go build -ldflags '-w -extldflags "-static"' -o /webserver
+
+EXPOSE 8080
+ENTRYPOINT ["/webserver"]
