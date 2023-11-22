@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver
+  namespace: mff
+spec:
+  selector:
+    app: webserver
+  ports:
+    - name: http
+      port: 8080
+  type: LoadBalancer

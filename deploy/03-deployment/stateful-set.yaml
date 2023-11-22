@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-webserver
+  namespace: mff
+spec:
+  selector:
+    app: webserver
+  ports:
+    - name: host
+      port: 8080
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: webserver
+  namespace: mff
+spec:
+  replicas: 3
+  serviceName: webserver
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+        - name: webserver
+          image: osery/webserver:multi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 200Mi
+              cpu: 200m
+            requests:
+              memory: 100Mi
+              cpu: 100m

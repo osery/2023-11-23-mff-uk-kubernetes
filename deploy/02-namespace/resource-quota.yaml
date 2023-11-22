@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota
+  namespace: mff
+spec:
+  hard:
+    requests.cpu: 50m
+    requests.memory: 10Mi
+    limits.cpu: 100m
+    limits.memory: 20Mi
